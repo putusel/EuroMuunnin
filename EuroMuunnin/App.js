@@ -6,39 +6,56 @@ import { Picker } from '@react-native-community/picker';
 export default function App() {
 
 const [amount, setAmount] = useState('');
-const [apiKey, setApiKey] = useState('bIUfEIuOL4Io2x2Ide0FsjIBOMkzEAor');
 const [selectedValue, setSelectedValue] = useState('');
+
 const [repositories, setRepositories] = useState([]);
 
+const myHeaders = new Headers ();
+myHeaders.append('apikey', 'bIUfEIuOL4Io2x2Ide0FsjIBOMkzEAor');
+
 const requestOptions = {
+  
   method: 'GET',
   redirect: 'follow',
-  headers: apiKey
+  headers: myHeaders
 };
 
-const getRepositories = () => {  
-  fetch(`"https://api.apilayer.com/currency_data/list`)  
-  .then(response => response.json())  
-  .then(data => setRepositories(data.meals))  
-  .catch(error => {         
+  const getRepositories = () => {  
+    fetch(`https://api.apilayer.com/currency_data/list`)  
+    .then(response => response.json())  
+    .then(data => setRepositories(data.currencies))  
+    .catch(error => {         
         Alert.alert('Error', error);   
   });
+  }
+  const getAmount = () => {  
+    fetch(`https://api.apilayer.com/currency_data/list`, requestOptions)  
+    .then(response => response.json())  
+    .then(data => setRepositories(data.currencies))  
+    .catch(error => {         
+        Alert.alert('Error', error);   
+    });
 }
   return (
     <View style={styles.container}>
       <Image style={styles.image} source={{uri: 'https://thumbs.dreamstime.com/z/two-euro-coin-white-background-standing-some-other-coins-56309229.jpg'}} />
       <Text style={styles.text}> € </Text>
+      {getRepositories}
       
       <Picker
         selectedValue={selectedValue}
-        style={{ height: 50, width: 150 }}
         onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}>
-      
-        <Picker.Item label="Java" value="java" />
-        <Picker.Item label="JavaScript" value="js" />
+
+        { repositories.map((item, key)=>(
+        <Picker.Item label={item} value={item} key={key} />)
+        )}
+        
       </Picker>
+      <TextInput 
+        style={{fontSize:16, width:60, borderColor: 'gray', borderWidth: 1.0, justifyContent: 'center', marginLeft:5}} 
+        onChangeText={text => setKeyword(text) } />
       <View style={{ width:Dimensions.get("window").width * 0.9, flexDirection: 'row', justifyContent: 'center', marginTop: 5}}>
-      <Button title="CONVERT"onPress= {getRepositories} />
+      <Button title="CONVERT"onPress= {getAmount} />
       </View>
       <StatusBar style="auto" />
     </View>
