@@ -9,7 +9,7 @@ const [text, setText] = useState('');
 const [amount, setAmount] = useState('');
 const [selectedCur, setSelectedValue] = useState('');
 const [repositories, setRepositories] = useState([]);
-const [result, setData] = useState('');
+const [result, setData] = useState('0');
 
 const myHeaders = new Headers ();
   myHeaders.append('apikey', 'muF343IbJw68a5rHGbyIikEVfOEcMtaU');
@@ -46,9 +46,9 @@ const requestOptions = {
     <View style={styles.container}>
       <Image style={styles.image} source={{uri: 'https://thumbs.dreamstime.com/z/two-euro-coin-white-background-standing-some-other-coins-56309229.jpg'}} />
       <Text style={styles.text}> {result} € </Text>
-      
+      <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
       <TextInput 
-        style={{ fontSize:16, width:60}} 
+        style={{ fontSize:16, width: 80}} 
         keyboardType={'numeric'}
         onChangeText={text => setText(text) } />
       <Picker
@@ -61,6 +61,7 @@ const requestOptions = {
           key={key}
         />)}
       </Picker> 
+      </View>
       <View style={{ flexDirection: 'row', width:Dimensions.get("window").width * 0.9,  justifyContent: 'center', marginTop: 5}}>
         <Button title="CONVERT"onPress= {getAmount} />
       </View>
