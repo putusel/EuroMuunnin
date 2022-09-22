@@ -5,19 +5,20 @@ import * as Location from 'expo-location';
 
 export default function App() {
   const [text, setText] = useState('');
-  const [location, setLocation] = useState(null); // State where location is saved
+  const [location, setLocation] = useState(null); // State where location is saved'
+  const [repositories, setRepositories] = useState({});
   const [coordinates, setCoordinates] = useState({latitude: 60.200692, longitude: 24.934302, latitudeDelta: 0.0322, longitudeDelta: 0.0221});
 
   const apikey = '9CZ5yt0C4TcCgBMqY6HffGPrdansAJrG';
 
   
   const getLocation = () => {  
-    fetch(`http://www.mapquestapi.com/geocoding/v1/address?key=${apikey}Y&location${text}`)  
+    fetch(`http://www.mapquestapi.com/geocoding/v1/address?key=${apikey}&location=${text}`)  
     .then(response => response.json())  
-    .then(data => {data})  
+    .then(data => setRepositories(data.results.locations.latLng))
     let coordinate = 
-    {latitude: data.results[0].locations[0].latLng.lat,
-    longitude: data.results[0].locations[0].latLng.lng, 
+    {latitude: results[0].locations[0].latLng.lat,
+    longitude: results[0].locations[0].latLng.lng, 
     latitudeDelta: 0.0322, 
     longitudeDelta: 0.0221}
     setCoordinates(coordinate)
@@ -26,7 +27,7 @@ export default function App() {
     });
   }
 
-  useEffect(() => { getLocation(); }, [])
+  /*useEffect(() => { getLocation(); }, [])*/
 
   return (
     <View style={styles.container}>
