@@ -16,13 +16,13 @@ export default function App() {
       const response = await fetch(`${url}key=${apikey}&location=${location}`);
       const data = await response.json();
 
-      let coordinates = {
+      let coordinate = {
         latitude: data.results[0].locations[0].latLng.lat,
         longitude: data.results[0].locations[0].latLng.lng,
         latitudeDelta: 0.0322, /*starting point Haaga-Helia*/
         longitudeDelta: 0.0221} /*starting point Haaga-Helia*/
   
-      setCoordinates(coordinates)
+      setCoordinates(coordinate)
 
 
     } catch (error) {
